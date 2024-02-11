@@ -6,7 +6,7 @@ import CheckoutCountBadge from './checkoutCountBadge';
 
 export default function Navbar() {
   return (
-  <div className="container hideen lg:block">
+  <div className="container hideen lg:block py-4">
     <div className="flex justify-between items-center pt-8">
       <Link to='/'> 
         <h1 className="text-4xl font-bold text-blue-600">ShopEase</h1> 
