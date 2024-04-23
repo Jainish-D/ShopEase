@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { BsSearch } from "react-icons/bs";
 import { FaRegUser, FaShoppingCart } from "react-icons/fa";
-import CheckoutCountBadge from "./checkoutCountBadge";
+import CheckoutCountBadge from "./CheckoutCountBadge";
 
 export default function Navbar() {
   return (

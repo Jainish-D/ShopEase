@@ -11,6 +11,9 @@ import HomePageLayout from "./components/HomePageLayout";
 import Home from "./pages/Home";
 import ProductsCatalogue from "./pages/ProductsCatalouge";
 import Basket from "./components/Basket";
+import StoreList from './pages/StoreList';
+import Category from './components/Category';
+import AllStores from './pages/AllStores';
 
 
 axios.defaults.baseURL = "http://localhost:8000";
@@ -38,6 +41,18 @@ function App() {
         <Route
           path="/basket"
           element={<Basket addedProducts={addedProducts} setAddedProducts={setAddedProducts} />}
+        />
+        <Route // Adding route for StoreList component
+          path="/stores-list"
+          element={<StoreList />}
+        />
+        <Route // Adding dynamic route for displaying stores based on category
+          path="/stores/:category"
+          element={<StoreList />}
+        />
+        <Route 
+          path="/all-stores"
+          element={<AllStores />}
         />
       </Routes>
     </UserContextProvider>

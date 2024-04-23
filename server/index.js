@@ -18,6 +18,7 @@ app.use(express.urlencoded({extended: false}));
 //Routes
 app.use('/', require('./routes/authRoutes'))
 app.use('/', require('./routes/productRoutes')); // Product routes
+app.use('/', require('./routes/storeRoutes')); // store routes
 
 
 const port = 8000;

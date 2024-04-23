@@ -17,7 +17,7 @@ router.get('/test', (req, res) => {
 });
 
 // Get all products
-router.get('/api/products', async (req, res) => {
+router.get('/api/product_list', async (req, res) => {
     try {
         const products = await ProductModel.find(); // Fetch products from MongoDB
         res.json(products);

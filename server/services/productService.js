@@ -4,7 +4,7 @@ const Product = require('../models/productModel.js');
 const getAllProducts = async () => {
   try {
     console.log('Fetching all products...');
-    const products = await Product.find();
+    const products = await Product.find().populate('storeId');
     console.log('Fetched products:', products);
     return products;
   } catch (error) {
