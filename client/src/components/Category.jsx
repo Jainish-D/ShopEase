@@ -4,7 +4,6 @@ import axios from "axios";
 
 const Category = () => {
   const [categories, setCategories] = useState([]);
-  const [allStores, setAllStores] = useState([]);
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -20,17 +19,7 @@ const Category = () => {
       }
     };
 
-    const fetchAllStores = async () => {
-      try {
-        const response = await axios.get("http://localhost:8000/api/store_list");
-        setAllStores(response.data);
-      } catch (error) {
-        console.error("Error fetching all stores:", error);
-      }
-    };
-
     fetchCategories();
-    fetchAllStores();
   }, []);
 
   return (
@@ -47,16 +36,7 @@ const Category = () => {
             </div>
           </Link>
         ))}
-      </div>
-      <div className="text-center mt-8">
-        <h2 className="bg-blue-200 border rounded-lg border-blue-600 p-2 text-3xl font-bold text-center mb-6">Explore All the Stores</h2>
-        {/* Add button to see all stores */}
-        <Link to="/all-stores" className="no-underline">
-          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-            See all the stores
-          </button>
-        </Link>
-      </div>
+      </div>   
     </div>
   );
 };

@@ -9,7 +9,7 @@ const productSchema = new Schema({
     type: Number,
     min: 0, // Ensure price is non-negative
   },
-  storeId: String, // Reference to the store's _id
+  storeName: String, // Reference to the store's name
 });
 
 const ProductModel = mongoose.model('Product', productSchema);

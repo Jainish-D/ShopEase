@@ -1,3 +1,5 @@
+// ProductsCatalogue.jsx
+
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
@@ -13,8 +15,8 @@ const ProductsCatalogue = ({ setAddedProducts }) => {
         const response = await axios.get('http://localhost:8000/api/product_list');
         setProducts(response.data);
 
-        // Extract unique store IDs
-        const uniqueStores = Array.from(new Set(response.data.map(product => product.storeId)));
+        // Extract unique store names
+        const uniqueStores = Array.from(new Set(response.data.map(product => product.storeName)));
         setStores(uniqueStores);
       } catch (error) {
         console.error('Error fetching products:', error);
@@ -45,7 +47,7 @@ const ProductsCatalogue = ({ setAddedProducts }) => {
           <div style={{ padding: '20px' }}>
             <h3 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '10px' }}>{product.name}</h3>
             <p style={{ color: '#666', marginBottom: '10px' }}>${parseFloat(product.price).toFixed(2)}</p>
-            <p style={{ color: '#888' }}>Store ID: {product.storeId}</p>
+            <p style={{ color: '#888' }}>Store Name: {product.storeName}</p>
             <button
               style={{
                 backgroundColor: '#007BFF',

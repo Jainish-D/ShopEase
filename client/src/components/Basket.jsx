@@ -37,3 +37,4 @@ const Basket = ({ addedProducts }) => {
 };
 
 export default Basket;
+

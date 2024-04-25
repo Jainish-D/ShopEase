@@ -1,4 +1,4 @@
-// App.jsx
+// App.js
 import React, { useState } from 'react';
 import { Routes, Route, useLocation } from "react-router-dom";
 import Register from "./pages/Register";
@@ -11,10 +11,9 @@ import HomePageLayout from "./components/HomePageLayout";
 import Home from "./pages/Home";
 import ProductsCatalogue from "./pages/ProductsCatalouge";
 import Basket from "./components/Basket";
-import StoreList from './pages/StoreList';
-import Category from './components/Category';
-import AllStores from './pages/AllStores';
-
+import Stores from './pages/Stores';
+import Recipes from './pages/Recipes';
+import PriceComparison from './components/PriceComparison';
 
 axios.defaults.baseURL = "http://localhost:8000";
 axios.defaults.withCredentials = true;
@@ -40,20 +39,40 @@ function App() {
         />
         <Route
           path="/basket"
-          element={<Basket addedProducts={addedProducts} setAddedProducts={setAddedProducts} />}
-        />
-        <Route // Adding route for StoreList component
-          path="/stores-list"
-          element={<StoreList />}
+          element={<Basket addedProducts={addedProducts} />}
         />
         <Route // Adding dynamic route for displaying stores based on category
           path="/stores/:category"
-          element={<StoreList />}
+          element={<Stores setAddedProducts={setAddedProducts} />}
         />
         <Route 
           path="/all-stores"
-          element={<AllStores />}
+          element={<Stores setAddedProducts={setAddedProducts} />}
         />
+        <Route // Adding dynamic route for displaying products by store
+          path="/stores/:category/:id"
+          element={<Stores setAddedProducts={setAddedProducts} />}
+        />
+        <Route // Adding dynamic route for displaying recipes based on category
+          path="/recipes/:category"
+          element={<Recipes setAddedProducts={setAddedProducts} />}
+        />
+        <Route 
+          path="/all-recipes"
+          element={<Recipes setAddedProducts={setAddedProducts} />}
+        />
+        <Route 
+          path="/recipe/:recipeName"
+          element={<Recipes setAddedProducts={setAddedProducts} />}
+        />
+
+        {/* Ensure to pass setAddedProducts to PriceComparison component */}
+        <Route
+          path="/price-comparison"
+          element={<PriceComparison setAddedProducts={setAddedProducts} />}
+        />
+
+
       </Routes>
     </UserContextProvider>
   );
