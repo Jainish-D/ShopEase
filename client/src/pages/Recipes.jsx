@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link, useLocation, useParams } from 'react-router-dom';
-import PriceComparison from '../components/PriceComparison';
+import CompareByRecipe from '../components/CompareByRecipe';
 
-const Recipes = () => {
+const Recipes = ({ setAddedProducts }) => {
   const [recipes, setRecipes] = useState([]);
   const [loading, setLoading] = useState(true);
   const { recipeName } = useParams();
@@ -27,7 +27,6 @@ const Recipes = () => {
     <div className="container mx-auto mt-8">
       {recipeName ? (
         <div>
-          {/* Display recipe details when recipeName is present in URL */}
           {recipes.map((recipe, index) => {
             if (recipe.name === recipeName) {
               return (
@@ -47,7 +46,8 @@ const Recipes = () => {
                       </ul>
                     )}
                   </div>
-                  <PriceComparison productNames={recipe.productNames} />
+                  {/* Pass setAddedProducts as a prop to CompareByRecipe */}
+                  <CompareByRecipe productNames={recipe.productNames} setAddedProducts={setAddedProducts} />
                 </div>
               );
             }
@@ -55,7 +55,6 @@ const Recipes = () => {
           })}
         </div>
       ) : (
-        // Display recipe cards when no recipeName is present in URL
         <React.Fragment>
           <h2 className="bg-blue-200 border rounded-lg border-blue-600 p-2 text-3xl font-bold text-center mb-6">All Recipes</h2>
           {loading ? (
@@ -94,11 +93,6 @@ const Recipes = () => {
             <Link to="/" className="no-underline">
               <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                 Go to Homepage
-              </button>
-            </Link>
-            <Link to="/basket" className="no-underline ml-4">
-              <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                Go to Cart
               </button>
             </Link>
           </React.Fragment>

@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams, Link, useLocation } from 'react-router-dom';
-import Basket from '../components/Basket'; // Import the Basket component
-import ProductCard from '../components/ProductCard'; // Import the ProductCard component
 
 const Stores = ({ setAddedProducts }) => {
   const { category, id: storeName } = useParams();
@@ -53,67 +51,100 @@ const Stores = ({ setAddedProducts }) => {
   };
 
   return (
-    <div className="container mx-auto mt-8">
-      <h2 className="bg-blue-200 border rounded-lg border-blue-600 p-2 text-3xl font-bold text-center mb-6">{pageTitle}</h2>
-      {storeName ? (
-        <div>
+  <div className="container mx-auto mt-8">
+    <h2 className="bg-blue-200 border rounded-lg border-blue-600 p-2 text-3xl font-bold text-center mb-6">{pageTitle}</h2>
+    {storeName ? (
+      <div>
+        {products.length === 0 ? (
+          <p className="text-center text-gray-600">No similar products found</p>
+        ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {products.map((product, index) => (
-              <ProductCard key={`product-${index}`} product={product} onAddToBasket={addToBasket} />
+              <div key={`product-${index}`} className="p-4">
+                <div className="bg-white border border-gray-200 rounded-md h-full overflow-hidden">
+                  <div className="p-4 h-full flex flex-col justify-between">
+                    <div>
+                      <h3 className="text-xl font-bold mb-2">{product.name}</h3>
+                      <p className="text-gray-600 mb-4">${parseFloat(product.price).toFixed(2)}</p>
+                    </div>
+                    <button 
+                      onClick={() => addToBasket(product)} 
+                      className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full"
+                    >
+                      Add to Basket
+                    </button>
+                  </div>
+                </div>
+              </div>
             ))}
           </div>
-          <div className="text-center mt-8">
-            <Link to="/" className="no-underline">
-              <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                Go to Homepage
-              </button>
-            </Link>
-            <Link to="/basket" className="no-underline">
-              <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-4">
-                Go to Cart
-              </button>
-            </Link>
-          </div>
+        )}
+        <div className="flex justify-center mt-8">
+          <Link to="/all-stores" className="no-underline mr-4">
+            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+              Go Back
+            </button>
+          </Link>
+          <Link to="/basket" className="no-underline">
+            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+              Go to Cart
+            </button>
+          </Link>
         </div>
-      ) : (
-        <div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {location.pathname === "/" && stores.slice(0, 4).map((store, index) => (
-              <Link key={`store-${index}`} to={`/stores/${encodeURIComponent(store.ethnicCategory)}/${encodeURIComponent(store.name)}`} className="no-underline">
-                <div style={{ width: '300px', margin: '20px', border: '1px solid #ddd', borderRadius: '10px', overflow: 'hidden' }}>
-                  <div style={{ padding: '20px' }}>
-                    <h3 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '10px' }}>{store.name}</h3>
-                    <p style={{ color: '#666', marginBottom: '10px' }}>Contact: {store.contact}</p>
-                    <p style={{ color: '#888' }}>Location: {store.location}</p>
-                    <p style={{ color: '#888' }}>Ethnic Category: {store.ethnicCategory}</p>
+      </div>
+    ) : (
+      <div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {location.pathname === "/" && stores.slice(0, 4).map((store, index) => (
+            <Link key={`store-${index}`} to={`/stores/${encodeURIComponent(store.ethnicCategory)}/${encodeURIComponent(store.name)}`} className="no-underline">
+              <div className="bg-blue-300 border border-gray-200 rounded-md h-full overflow-hidden">
+                <div className="p-4">
+                  <h3 className="text-xl font-bold mb-2">{store.name}</h3>
+                  <div className="text-gray-600 mb-2">
+                    <p>Contact: {store.contact}</p>
+                    <p>Location: {store.location}</p>
+                    <p>Ethnic Category: {store.ethnicCategory}</p>
                   </div>
                 </div>
-              </Link>
-            ))}
-            {location.pathname !== "/" && stores.map((store, index) => (
-              <Link key={`store-${index}`} to={`/stores/${encodeURIComponent(store.ethnicCategory)}/${encodeURIComponent(store.name)}`} className="no-underline">
-                <div style={{ width: '300px', margin: '20px', border: '1px solid #ddd', borderRadius: '10px', overflow: 'hidden' }}>
-                  <div style={{ padding: '20px' }}>
-                    <h3 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '10px' }}>{store.name}</h3>
-                    <p style={{ color: '#666', marginBottom: '10px' }}>Contact: {store.contact}</p>
-                    <p style={{ color: '#888' }}>Location: {store.location}</p>
-                    <p style={{ color: '#888' }}>Ethnic Category: {store.ethnicCategory}</p>
+              </div>
+            </Link>
+          ))}
+          {location.pathname !== "/" && stores.map((store, index) => (
+            <Link key={`store-${index}`} to={`/stores/${encodeURIComponent(store.ethnicCategory)}/${encodeURIComponent(store.name)}`} className="no-underline">
+              <div className="bg-blue-300 border border-gray-200 rounded-md h-full overflow-hidden">
+                <div className="p-4">
+                  <h3 className="text-xl font-bold mb-2">{store.name}</h3>
+                  <div className="text-gray-600 mb-2">
+                    <p>Contact: {store.contact}</p>
+                    <p>Location: {store.location}</p>
+                    <p>Ethnic Category: {store.ethnicCategory}</p>
                   </div>
                 </div>
-              </Link>
-            ))}
-          </div>
-          <div className="text-center mt-8">
+              </div>
+            </Link>
+          ))}
+        </div>
+        <div className="flex justify-center mt-8">
+          {location.pathname === "/" && (
             <Link to="/all-stores" className="no-underline">
               <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                 See all stores
               </button>
             </Link>
-          </div>
+          )}
+          {location.pathname === "/all-stores" && (
+            <Link to="/" className="no-underline">
+              <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                Go to Homepage
+              </button>
+            </Link>
+          )}
         </div>
-      )}
-    </div>
-  );
+      </div>
+    )}
+  </div>
+);
+
 };
 
 export default Stores;

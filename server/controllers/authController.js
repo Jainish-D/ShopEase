@@ -75,6 +75,12 @@ const loginUser = async (req, res) => {
  }
 }
 
+// Logout Endpoint
+const logoutUser = (req, res) => {
+    res.clearCookie('jwt');
+    res.json({ message: 'Logged out successfully' });
+}
+
 const getProfile =(req, res) => {
 const{token} = req.cookies
 if(token) {
@@ -91,5 +97,6 @@ module.exports = {
     test,
     registerUser,
     loginUser,
+    logoutUser,
     getProfile
 };

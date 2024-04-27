@@ -1,29 +1,29 @@
-// PriceComparison.jsx
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
-const PriceComparison = ({ productNames, setAddedProducts }) => {
-
+const CompareByRecipe = ({ productNames, setAddedProducts }) => {
   const [stores, setStores] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchStores = async () => {
       try {
+        // Fetch stores and products data
         const storesResponse = await axios.get('http://localhost:8000/api/store_list');
         const productsResponse = await axios.get('http://localhost:8000/api/product_list');
 
         const storesData = storesResponse.data;
         const productsData = productsResponse.data;
 
-        // Find stores that have at least one of the ingredients
+        // Filter stores based on the selected product names
         const storesWithSomeIngredients = storesData.filter(store => {
           return productNames.some(productName => {
             return productsData.some(product => product.storeName === store.name && product.name === productName);
           });
         });
 
-        // Now fetch the products for these stores
+        // Map stores to include only products with selected names
         const storesWithProducts = storesWithSomeIngredients.map(store => {
           const storeProducts = productsData.filter(product => product.storeName === store.name && productNames.includes(product.name));
           return { ...store, products: storeProducts };
@@ -39,6 +39,7 @@ const PriceComparison = ({ productNames, setAddedProducts }) => {
     fetchStores();
   }, [productNames]);
 
+  // Function to calculate total price of products in a store
   const calculateTotalPrice = (store) => {
     let totalPrice = 0;
     store.products.forEach((product) => {
@@ -47,17 +48,16 @@ const PriceComparison = ({ productNames, setAddedProducts }) => {
     return totalPrice.toFixed(2);
   };
 
+  // Function to handle adding all products from a store to the basket
   const handleAddAllToBasket = (store) => {
-    const productsToAdd = store.products.filter(product => productNames.includes(product.name)).map((product) => ({
-      name: product.name,
-
-    }));
-  
-    console.log("Products to add:", productsToAdd); // Add this line to check products being added
-  
-    setAddedProducts((prevProducts) => [...prevProducts, ...productsToAdd]);
+    const productsToAdd = store.products.filter(product => productNames.includes(product.name));
+    if (productsToAdd.length > 0) {
+      setAddedProducts(prevProducts => [...prevProducts, ...productsToAdd]);
+      console.log("Products added to basket:", productsToAdd);
+    } else {
+      console.error('No products to add to basket');
+    }
   };
-  
 
   // Separate stores with all products and stores with some products
   const storesWithAllProducts = stores.filter(store => store.products.length === productNames.length);
@@ -65,12 +65,10 @@ const PriceComparison = ({ productNames, setAddedProducts }) => {
 
   return (
     <div>
-      <h2 className="text-2xl font-bold mb-4 text-center bg-blue-500 text-white py-2 rounded-lg">Compare Store Prices</h2>
-
       {/* Stores with all products */}
       {storesWithAllProducts.length > 0 ? (
         <div className="mt-8">
-          <h3 className="text-xl font-bold mb-4">Stores with all products</h3>
+           <h3 className="bg-blue-200 border rounded-lg border-blue-600 p-2 text-xl font-bold text-left mb-6">Stores With All Products</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {storesWithAllProducts.map((store) => (
               <StoreCard key={store._id} store={store} calculateTotalPrice={calculateTotalPrice} handleAddAllToBasket={handleAddAllToBasket} />
@@ -87,7 +85,7 @@ const PriceComparison = ({ productNames, setAddedProducts }) => {
       {/* Stores with some products */}
       {storesWithSomeProducts.length > 0 && (
         <div className="mt-8">
-          <h3 className="text-xl font-bold mb-4">Stores with some products</h3>
+          <h3 className="bg-blue-200 border rounded-lg border-blue-600 p-2 text-xl font-bold text-left mb-6">Stores With Some Products</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {storesWithSomeProducts.map((store) => (
               <StoreCard key={store._id} store={store} calculateTotalPrice={calculateTotalPrice} handleAddAllToBasket={handleAddAllToBasket} />
@@ -95,10 +93,25 @@ const PriceComparison = ({ productNames, setAddedProducts }) => {
           </div>
         </div>
       )}
+
+      {/* Buttons to navigate */}
+      <div className="text-center mt-8">
+        <Link to="/all-recipes" className="no-underline">
+          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            Go Back
+          </button>
+        </Link>
+        <Link to="/basket" className="no-underline">
+          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-4">
+            Go to Basket
+          </button>
+        </Link>
+      </div>
     </div>
   );
 };
 
+// StoreCard component remains unchanged
 const StoreCard = ({ store, calculateTotalPrice, handleAddAllToBasket }) => (
   <div className="store-card bg-blue-300 rounded-lg shadow-md p-6 flex flex-col justify-between">
     <div>
@@ -122,4 +135,4 @@ const StoreCard = ({ store, calculateTotalPrice, handleAddAllToBasket }) => (
   </div>
 );
 
-export default PriceComparison;
+export default CompareByRecipe;

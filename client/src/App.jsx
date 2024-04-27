@@ -13,7 +13,12 @@ import ProductsCatalogue from "./pages/ProductsCatalouge";
 import Basket from "./components/Basket";
 import Stores from './pages/Stores';
 import Recipes from './pages/Recipes';
-import PriceComparison from './components/PriceComparison';
+import PriceComparison from './pages/PriceComparison';;
+import CompareByProduct from './components/CompareByProduct';
+import CompareByRecipe from './components/CompareByRecipe';
+import CompareByStore from './components/CompareByStore';
+import SearchBar from './components/SearchBar';
+import SearchResults from './components/SearchResults';
 
 axios.defaults.baseURL = "http://localhost:8000";
 axios.defaults.withCredentials = true;
@@ -39,7 +44,7 @@ function App() {
         />
         <Route
           path="/basket"
-          element={<Basket addedProducts={addedProducts} />}
+          element={<Basket addedProducts={addedProducts} updateAddedProducts={setAddedProducts} />}
         />
         <Route // Adding dynamic route for displaying stores based on category
           path="/stores/:category"
@@ -70,6 +75,27 @@ function App() {
         <Route
           path="/price-comparison"
           element={<PriceComparison setAddedProducts={setAddedProducts} />}
+        />
+
+        <Route
+          path="/compare-prices/compare-by-product"
+          element={<CompareByProduct setAddedProducts={setAddedProducts} updateAddedProducts={setAddedProducts} />}
+        />
+        <Route
+          path="/compare-by-recipe"
+          element={<CompareByRecipe setAddedProducts={setAddedProducts} />}
+        />
+        <Route
+          path="/replace-basket"
+          element={<CompareByStore addedProducts={addedProducts} setAddedProducts={setAddedProducts} />}
+        />
+        <Route 
+          path="/search-bar" 
+          element={<SearchBar />} 
+        />
+        <Route 
+          path="/search-results" 
+          element={<SearchResults />} 
         />
 
 
