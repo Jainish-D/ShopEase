@@ -40,39 +40,46 @@ const ProductsCatalogue = ({ setAddedProducts }) => {
   };
 
   return (
-    <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
-      {/* Product cards */}
-      {filteredProducts.map((product, index) => (
-        <div key={`product-${index}`} style={{ width: '300px', margin: '20px', border: '1px solid #ddd', borderRadius: '10px', overflow: 'hidden' }}>
-          <div style={{ padding: '20px' }}>
-            <h3 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '10px' }}>{product.name}</h3>
-            <p style={{ color: '#666', marginBottom: '10px' }}>${parseFloat(product.price).toFixed(2)}</p>
-            <p style={{ color: '#888' }}>Store Name: {product.storeName}</p>
-            <button
-              style={{
-                backgroundColor: '#007BFF',
-                color: 'white',
-                padding: '10px',
-                borderRadius: '5px',
-                cursor: 'pointer',
-                border: 'none',
-              }}
-              onClick={() => handleAddToBasket(product._id)}
-            >
-              Add to Basket
-            </button>
+    <div>
+      <h2 className="bg-blue-200 border rounded-lg border-blue-600 p-2 text-3xl font-bold text-center mb-6 mt-4">Products Catalogue</h2>
+      <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
+        {/* Product cards */}
+        {filteredProducts.map((product, index) => (
+          <div key={`product-${index}`} style={{ width: '300px', margin: '20px', border: '1px solid #ddd', borderRadius: '10px', overflow: 'hidden' }}>
+            <div style={{ padding: '20px' }}>
+              <h3 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '10px' }}>{product.name}</h3>
+              <p style={{ color: '#666', marginBottom: '10px' }}>${parseFloat(product.price).toFixed(2)}</p>
+              <p style={{ color: '#888' }}>Store Name: {product.storeName}</p>
+              <button
+                style={{
+                  backgroundColor: '#007BFF',
+                  color: 'white',
+                  padding: '10px',
+                  borderRadius: '5px',
+                  cursor: 'pointer',
+                  border: 'none',
+                }}
+                onClick={() => handleAddToBasket(product._id)}
+              >
+                Add to Basket
+              </button>
+            </div>
           </div>
-        </div>
-      ))}
-
-      {/* Button to go to the basket page */}
-      <div style={{ width: '100%', textAlign: 'center', marginTop: '20px' }}>
-        <Link to="/basket">
-          <button style={{ backgroundColor: '#28a745', color: 'white', padding: '10px', borderRadius: '5px', cursor: 'pointer', border: 'none' }}>
-            Go to Basket
-          </button>
-        </Link>
+        ))}
       </div>
+        <div className="flex justify-center mt-8 mb-8">
+          <Link to="/" style={{ marginRight: '20px' }} className="no-underline">
+            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+              Go to homepage
+            </button>
+          </Link>
+
+          <Link to="/basket" className="no-underline">
+            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+              Go to Basket
+            </button>
+          </Link>
+        </div>
     </div>
   );
 };

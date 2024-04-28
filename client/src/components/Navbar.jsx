@@ -13,7 +13,7 @@ const Navbar = ({ isLoggedIn, userName, onLogout }) => {
               ShopEase
             </Link>
             <Link to="/products" className="text-white hover:text-gray-200 mr-4 mt-2">
-              Products
+              Products Catalogue
             </Link>
           </div>
           {/* Render the SearchBar component here */}

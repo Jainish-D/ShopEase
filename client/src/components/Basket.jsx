@@ -36,6 +36,11 @@ const Basket = ({ addedProducts, updateAddedProducts }) => {
       <div style={{ padding: '20px' }}>
         {/* Title "Basket" */}
         <h2 className="bg-blue-200 border rounded-lg border-blue-600 p-2 text-3xl font-bold text-center mb-6">Basket</h2>
+        {addedProducts.length === 0 ? (
+          <div className="text-center mt-10 mb-4 font-bold text-xl">
+            <p>Basket is Empty</p>
+          </div>
+        ) : null}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {Object.keys(groupedProducts).map((storeName, index) => (
             <div key={`basket-store-${index}`} className="border rounded-lg p-4 flex flex-col h-full">
@@ -71,38 +76,38 @@ const Basket = ({ addedProducts, updateAddedProducts }) => {
           <h3 style={{ fontSize: '20px', fontWeight: 'bold' }}>Overall Total: ${
             Object.values(groupedProducts).reduce((total, products) => total + parseFloat(calculateTotalForStore(products)), 0).toFixed(2)
           }</h3>
-          <button
-            style={{
-              backgroundColor: '#007bff',
-              color: 'white',
-              padding: '10px',
-              borderRadius: '5px',
-              cursor: 'pointer',
-              border: 'none',
-              marginTop: '10px',
-            }}
-            onClick={() => alert('Checkout functionality will be implemented later.')}
-          >
-            Checkout
-          </button>
-          <button
-            style={{
-              backgroundColor: '#007bff',
-              color: 'white',
-              padding: '10px',
-              borderRadius: '5px',
-              cursor: 'pointer',
-              border: 'none',
-              marginTop: '10px',
-              marginLeft: '10px',
-            }}
-            onClick={() => window.location.href = "/"}
-          >
-            Go to HomePage
-          </button>
+          <div className="flex justify-left mt-4">
+            <button
+              style={{
+                backgroundColor: '#007bff',
+                color: 'white',
+                padding: '10px',
+                borderRadius: '5px',
+                cursor: 'pointer',
+                border: 'none',
+                marginRight: '10px',
+              }}
+              onClick={() => alert('Checkout functionality will be implemented later.')}
+            >
+              Checkout
+            </button>
+            <button
+              style={{
+                backgroundColor: '#007bff',
+                color: 'white',
+                padding: '10px',
+                borderRadius: '5px',
+                cursor: 'pointer',
+                border: 'none',
+              }}
+              onClick={() => window.location.href = "/"}
+            >
+              Go to HomePage
+            </button>
+          </div>
           <div style={{ padding: '20px' }}></div>
           {/* Render CompareByStore component if there are products in the basket */}
-          {addedProducts && addedProducts.length > 0 && <CompareByStore addedProducts={addedProducts} updateAddedProducts={updateAddedProducts} />}
+          {addedProducts.length > 0 && <CompareByStore addedProducts={addedProducts} updateAddedProducts={updateAddedProducts} />}
         </div>
       </div>
     </div>

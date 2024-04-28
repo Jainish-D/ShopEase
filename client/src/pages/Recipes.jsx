@@ -35,6 +35,11 @@ const Recipes = ({ setAddedProducts }) => {
                   <div className="bg-blue-300 rounded-lg shadow-md p-6">
                     <p className="mb-4"><strong>Ethnic Category:</strong> {recipe.ethnicCategory}</p>
                     <p className="mb-4">{recipe.description}</p>
+                    <p className="mb-4"><strong>Steps:</strong></p>
+                    {/* Render each step in a different line */}
+                    {recipe.steps.map((step, i) => (
+                      <p key={i} className="mb-2">{step}</p>
+                    ))}
                     <p className="mb-4"><strong>Ingredients:</strong></p>
                     {recipe.productNames && recipe.productNames.length > 0 && (
                       <ul>
@@ -69,6 +74,11 @@ const Recipes = ({ setAddedProducts }) => {
                         <h3 className="text-xl font-bold mb-2">{recipe.name}</h3>
                         <p className="mb-4"><strong>Ethnic Category:</strong> {recipe.ethnicCategory}</p>
                         <p className="mb-4">{recipe.description}</p>
+                        <p className="mb-4"><strong>Steps:</strong></p>
+                        {/* Render each step in a different line */}
+                        {recipe.steps.map((step, i) => (
+                          <p key={i} className="mb-2">{step}</p>
+                        ))}
                       </div>
                     </div>
                   </Link>
