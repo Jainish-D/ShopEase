@@ -1,5 +1,5 @@
-const mongoose = require('mongoose')
-const {Schema}  = mongoose
+const mongoose = require('mongoose');
+const { Schema } = mongoose;
 
 const userSchema = new Schema({
     name: String,
@@ -7,8 +7,12 @@ const userSchema = new Schema({
         type: String,
         unique: true
     },
-    password:String
-})
+    password: String,
+    isStoreOwner: {
+        type: Boolean,
+        default: false
+    }
+});
 
 const UserModel = mongoose.model('User', userSchema);
 

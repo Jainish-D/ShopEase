@@ -14,15 +14,22 @@ export default function Login() {
     e.preventDefault();
     const { email, password } = data;
     try {
-      const { data } = await axios.post("/login", {
+      const { data: responseData } = await axios.post("/login", {
         email,
         password,
       });
-      if (data.error) {
-        toast.error(data.error);
+      if (responseData.error) {
+        toast.error(responseData.error);
       } else {
+        // Store the JWT token in local storage upon successful login
+        localStorage.setItem("token", responseData.token);
         setData({});
-        navigate("/");
+        // Redirect users based on their role after successful login
+        if (responseData.user.isStoreOwner) {
+          navigate("/store-owner-profile");
+        } else {
+          navigate("/");
+        }
       }
     } catch (error) {
       // Handle error if needed
@@ -83,11 +90,17 @@ export default function Login() {
             Login
           </button>
         </form>
-        <div className="mt-4 text-sm">
+        <div className="mt-4 mb-4 text-sm">
           <p>
             Don't have an account?{" "}
             <Link to="/register" className="text-blue-500">
               Sign up here
+            </Link>
+          </p>
+          <p>
+            Are you a store owner?{" "}
+            <Link to="/register-store-owner" className="text-blue-500">
+              Register As Store Owner
             </Link>
           </p>
           <p>

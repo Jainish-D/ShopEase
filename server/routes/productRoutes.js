@@ -39,4 +39,37 @@ router.post('/api/prices', async (req, res) => {
     }
 });
 
+// Add product to store endpoint
+router.post('/api/add-product', async (req, res) => { // Use '/add-product' endpoint
+    try {
+        const { name, price, storeName } = req.body;
+
+        // Check if all required fields are provided
+        if (!name || !price || !storeName) {
+            return res.status(400).json({ error: 'Name, price, and storeName are required' });
+        }
+
+        // Check if the authenticated user is a store owner
+        const storeOwner = await StoreOwner.findOne({ storeName });
+        if (!storeOwner) {
+            return res.status(401).json({ error: 'Unauthorized' });
+        }
+
+        // Create a new product in the database and associate it with the store
+        const product = await ProductModel.create({
+            name,
+            price,
+            storeName
+        });
+
+        res.status(201).json(product);
+    } catch (error) {
+        console.error('Error adding product to store:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
+module.exports = router;
+
+
 module.exports = router;
